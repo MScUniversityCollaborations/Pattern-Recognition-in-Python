@@ -4,7 +4,7 @@ import linearNN
 
 def readCSV():
     # Reading data from csv file
-    all_data = pd.read_csv("all_data.csv", sep=',')
+    all_data = pd.read_csv('all_data.csv', sep=',')
     matches_table = pd.read_csv("Matches.csv")
 
     # Creating pandas dataframes

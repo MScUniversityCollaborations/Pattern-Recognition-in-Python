@@ -1,10 +1,14 @@
 import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 
 # Inputs / Outputs / Weights
 inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 outputs = np.array([0, 0, 0, 1])
 weights = np.array([0.0, 0.0])
 learning_rate = 0.1
+
+scaler = MinMaxScaler()
+inputs = scaler.fit_transform(inputs)
 
 
 # Step Function
