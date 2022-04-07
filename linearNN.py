@@ -1,14 +1,11 @@
 import numpy as np
 
-inputs = [20, 23]
-weights = [-0.9, 0.1]
+inputs = np.array([20, 23])
+weights = np.array([0.9, 0.1])
 
 
 def sum_function(inputs, weights):
-    s = 0
-    for i in range(2):
-        s += inputs[i] * weights[i]
-    return s
+    return inputs.dot(weights)
 
 
 s = sum_function(inputs, weights)
