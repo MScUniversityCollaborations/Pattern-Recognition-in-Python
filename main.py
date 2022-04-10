@@ -1,5 +1,7 @@
 import pandas as pd
+
 import linearNN
+import linearNN2
 
 
 def readCSV():
@@ -25,4 +27,4 @@ def readCSV():
 if __name__ == '__main__':
     b365, bw, iw, lb, all_data = readCSV()
     print(b365)
-    linearNN.start(b365)
+    # linearNN.start(b365)
