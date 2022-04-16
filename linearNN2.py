@@ -52,8 +52,6 @@ def start(bet):
         split_X_train, split_X_test = x[train_idx], x[valid_idx]
         split_Y_train, split_Y_test = y[train_idx], y[valid_idx]
 
-
-
     for i in range(0, 2):
         if (i == 0):
             regressor = LinearRegression(x_train, y_train)

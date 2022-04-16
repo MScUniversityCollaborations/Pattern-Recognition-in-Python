@@ -3,12 +3,14 @@ import nnfs
 
 nnfs.init()
 
+
 # Dense layer
 class Layer_Dense:
 
     # Layer initialization
     def __init__(self, n_inputs, n_neurons):
         # Initialize weights and biases
+        self.output = None
         self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
 
@@ -22,6 +24,9 @@ class Layer_Dense:
 class Activation_ReLU:
 
     # Forward pass
+    def __init__(self):
+        self.output = None
+
     def forward(self, inputs):
         # Calculate output values from inputs
         self.output = np.maximum(0, inputs)
@@ -31,6 +36,9 @@ class Activation_ReLU:
 class Activation_Softmax:
 
     # Forward pass
+    def __init__(self):
+        self.output = None
+
     def forward(self, inputs):
         # Get unnormalized probabilities
         exp_values = np.exp(inputs - np.max(inputs, axis=1,
@@ -90,17 +98,16 @@ class Loss_CategoricalCrossentropy(Loss):
         return negative_log_likelihoods
 
 
-def start(arr):
+def input_data(bet, input_layer):
     # Create dataset
-    train = 15000
-    X, y = arr.iloc[:train, 1:], arr.iloc[:train, 0]
-
+    train = len(bet)
+    X, y = bet.iloc[:train, 1:], bet.iloc[:train, 0]
 
     # Create Dense layer with 2 input features and 64 output values
     # Create model
-    dense1 = Layer_Dense(28, 10)  # first dense layer, 28 inputs
+    dense1 = Layer_Dense(input_layer, 10)  # first dense layer, 28 inputs
     activation1 = Activation_ReLU()
-    dense2 = Layer_Dense(10, 2)  # second dense layer, 2 output
+    dense2 = Layer_Dense(2, 1)  # second dense layer, 2 output
     activation2 = Activation_Softmax()
 
     # Create loss function
@@ -116,12 +123,14 @@ def start(arr):
     for iteration in range(1000):
 
         # Update weights with some small random values
-        dense1.weights += 0.05 * np.random.randn(28, 1)
+        dense1.weights += 0.05 * np.random.randn(input_layer, 1)
         dense1.biases += 0.05 * np.random.randn(1, 10)
-        dense2.weights += 0.05 * np.random.randn(10, 2)
+        dense2.weights += 0.05 * np.random.randn(10, 1)
         dense2.biases += 0.05 * np.random.randn(1, 2)
 
         # Perform a forward pass of our training data through this layer
+
+        # dense1.forward(np.float64(X))
         dense1.forward(X)
         activation1.forward(dense1.output)
         dense2.forward(activation1.output)
@@ -145,9 +154,12 @@ def start(arr):
             best_dense2_weights = dense2.weights.copy()
             best_dense2_biases = dense2.biases.copy()
             lowest_loss = loss
+            final_accuracy = accuracy
         # Revert weights and biases
         else:
             dense1.weights = best_dense1_weights.copy()
             dense1.biases = best_dense1_biases.copy()
             dense2.weights = best_dense2_weights.copy()
             dense2.biases = best_dense2_biases.copy()
+
+    return final_accuracy, lowest_loss
