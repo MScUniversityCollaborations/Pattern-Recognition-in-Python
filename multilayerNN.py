@@ -101,11 +101,12 @@ class Loss_CategoricalCrossentropy(Loss):
 def input_data(bet, input_layer):
     # Create dataset
     train = len(bet)
+    # train = 15000
     X, y = bet.iloc[:train, 1:], bet.iloc[:train, 0]
 
     # Create Dense layer with 2 input features and 64 output values
     # Create model
-    dense1 = Layer_Dense(input_layer, 10)  # first dense layer, 28 inputs
+    dense1 = Layer_Dense(input_layer, 10)  # first dense layer, input_layer = 3 inputs
     activation1 = Activation_ReLU()
     dense2 = Layer_Dense(2, 1)  # second dense layer, 2 output
     activation2 = Activation_Softmax()
@@ -125,12 +126,10 @@ def input_data(bet, input_layer):
         # Update weights with some small random values
         dense1.weights += 0.05 * np.random.randn(input_layer, 1)
         dense1.biases += 0.05 * np.random.randn(1, 10)
-        dense2.weights += 0.05 * np.random.randn(10, 1)
+        dense2.weights += 0.05 * np.random.randn(2, 1)
         dense2.biases += 0.05 * np.random.randn(1, 2)
 
         # Perform a forward pass of our training data through this layer
-
-        # dense1.forward(np.float64(X))
         dense1.forward(X)
         activation1.forward(dense1.output)
         dense2.forward(activation1.output)

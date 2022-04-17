@@ -3,6 +3,7 @@ import pandas as pd
 import linearNN
 import linearNN2
 import multilayerNN
+import cmeans
 
 
 def readCSV():
@@ -30,7 +31,6 @@ if __name__ == '__main__':
     print(b365)
     print(len(bw))
     # linearNN.start(b365)
-
     print("Ερώτημα 2: ")
     final_accuracy_b365, lowest_loss_b365 = multilayerNN.input_data(b365, 3)
     final_accuracy_bw, lowest_loss_bw = multilayerNN.input_data(bw, 3)
@@ -48,5 +48,19 @@ if __name__ == '__main__':
     print("Η χειρότερη εταιρεία προβλέψεων είναι η : ", worst_company, "\n")
 
     print("Ερώτημα 3: ")
-    final_accuracy, lowest_loss = multilayerNN.input_data(data, 28)
-    print(final_accuracy, lowest_loss)
+    # final_accuracy, lowest_loss = multilayerNN.input_data(data, 28)
+    # print(final_accuracy, lowest_loss)
+
+
+    print("Ερώτημα 4: ")
+    # b365.drop('win', 1, inplace=True)
+    # cmeans.start(b365, 'B365')
+
+    # bw.drop('win', 1, inplace=True)
+    # cmeans.start(bw, "BW")
+    #
+    # iw.drop('win', 1, inplace=True)
+    # cmeans.start(iw, "IW")
+    #
+    # b365.drop('win', 1, inplace=True)
+    # lb.start(lb, "lb")
