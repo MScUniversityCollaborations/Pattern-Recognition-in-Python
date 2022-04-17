@@ -103,12 +103,14 @@ def input_data(bet, input_layer):
     train = len(bet)
     # train = 15000
     X, y = bet.iloc[:train, 1:], bet.iloc[:train, 0]
+    # print(X)
+    # print("Y: ")
+    # print(y)
 
-    # Create Dense layer with 2 input features and 64 output values
     # Create model
     dense1 = Layer_Dense(input_layer, 10)  # first dense layer, input_layer = 3 inputs
     activation1 = Activation_ReLU()
-    dense2 = Layer_Dense(2, 1)  # second dense layer, 2 output
+    dense2 = Layer_Dense(10, 3)  # second dense layer, 2 output
     activation2 = Activation_Softmax()
 
     # Create loss function
@@ -126,8 +128,8 @@ def input_data(bet, input_layer):
         # Update weights with some small random values
         dense1.weights += 0.05 * np.random.randn(input_layer, 1)
         dense1.biases += 0.05 * np.random.randn(1, 10)
-        dense2.weights += 0.05 * np.random.randn(2, 1)
-        dense2.biases += 0.05 * np.random.randn(1, 2)
+        dense2.weights += 0.05 * np.random.randn(10, 1)
+        dense2.biases += 0.05 * np.random.randn(1, 1)
 
         # Perform a forward pass of our training data through this layer
         dense1.forward(X)
@@ -146,8 +148,8 @@ def input_data(bet, input_layer):
 
         # If loss is smaller - print and save weights and biases aside
         if loss < lowest_loss:
-            print('New set of weights found, iteration:', iteration,
-                  'loss:', loss, 'acc:', accuracy)
+            # print('New set of weights found, iteration:', iteration,
+            #       'loss:', loss, 'acc:', accuracy)
             best_dense1_weights = dense1.weights.copy()
             best_dense1_biases = dense1.biases.copy()
             best_dense2_weights = dense2.weights.copy()
