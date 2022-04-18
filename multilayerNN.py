@@ -100,12 +100,9 @@ class Loss_CategoricalCrossentropy(Loss):
 
 def input_data(bet, input_layer):
     # Create dataset
-    train = len(bet)
-    # train = 15000
+    train = len(bet) # train 
+
     X, y = bet.iloc[:train, 1:], bet.iloc[:train, 0]
-    # print(X)
-    # print("Y: ")
-    # print(y)
 
     # Create model
     dense1 = Layer_Dense(input_layer, 10)  # first dense layer, input_layer = 3 inputs

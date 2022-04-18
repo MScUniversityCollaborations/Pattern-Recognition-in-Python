@@ -30,7 +30,8 @@ if __name__ == '__main__':
     b365, bw, iw, lb, data = readCSV()
     print(b365)
     print(len(bw))
-    # linearNN.start(b365)
+    print("Ερώτημα 1: ")
+    linearNN.start(b365)
     print("Ερώτημα 2: ")
     # final_accuracy_b365, lowest_loss_b365 = multilayerNN.input_data(b365, 3)
     # final_accuracy_bw, lowest_loss_bw = multilayerNN.input_data(bw, 3)
@@ -48,8 +49,8 @@ if __name__ == '__main__':
     # print("Η χειρότερη εταιρεία προβλέψεων είναι η : ", worst_company, "\n")
 
     print("Ερώτημα 3: ")
-    final_accuracy, lowest_loss = multilayerNN.input_data(data, 28)
-    print(final_accuracy, lowest_loss)
+    # final_accuracy, lowest_loss = multilayerNN.input_data(data, 28)
+    # print(final_accuracy, lowest_loss)
 
 
     print("Ερώτημα 4: ")
