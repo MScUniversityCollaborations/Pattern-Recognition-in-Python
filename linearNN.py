@@ -1,55 +1,14 @@
-# Simple Perceptron
-# import numpy as np
-# from sklearn.preprocessing import MinMaxScaler
-#
-# # Inputs / Outputs / Weights
-# inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-# outputs = np.array([0, 0, 0, 1])
-# weights = np.array([0.0, 0.0])
-# learning_rate = 0.1
-# scaler = MinMaxScaler()
-# inputs = scaler.fit_transform(inputs)
-#
-#
-# # Step Function
-# def step_function(sum):
-#     if sum >= 1:
-#         return 1
-#     return 0
-#
-#
-# # Calculate Output
-# def calculate_output(instance):
-#     s = instance.dot(weights)
-#     return step_function(s)
-#
-#
-# def train(inputs):
-#     total_error = 1
-#     while total_error != 0:
-#         total_error = 0
-#         for i in range(len(outputs)):
-#             prediction = calculate_output(inputs[i])
-#             error = abs(outputs[i] - prediction)
-#             total_error += error
-#             if error > 0:
-#                 for j in range(len(weights)):
-#                     weights[j] = weights[j] + (learning_rate * inputs[i][j] * error)
-#                     print('Weight update: ' + str(weights[j]))
-#         print('Total error: ' + str(total_error))
-
-from sklearn.model_selection import train_test_split, KFold, cross_val_score
-from sklearn.linear_model import LinearRegression
-from statsmodels.tools.eval_measures import rmse
 import numpy as np
-import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
 
 # Linear Regression class
-class LinReg:
+class LinearRegression:
 
     # Initializing lr: learning rate, epochs: no. of iterations,
-    # weights & bias: parameters as None    # default lr: 0.01, epochs: 800
-    def __init__(self, lr=0.01, epochs=800):
+    # weights & bias: parameters as None    # default lr: 0.01, epochs: 1000
+    def __init__(self, lr=0.01, epochs=1000):
         self.lr = lr
         self.epochs = epochs
         self.weights = None
@@ -105,14 +64,11 @@ class LinReg:
 def start(bet):
 
     X, y, seed = bet.iloc[:, 1:], bet.iloc[:, 0], 40
-
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.15, random_state=seed)
-    model = LinReg(epochs=100)
-    w, b, l = model.fit(X_train, y_train)
-    print("W: ", w)
-    print("b: ", b)
-    print("l: ", l)
-    print("mean l: ", np.mean(l))
+    model = LinearRegression(epochs=100)
+    w, b, losses = model.fit(X_train, y_train)
+
+    return np.mean(losses)
 
     # Plotting our predictions.
     # fig = plt.figure(figsize=(8, 6))
