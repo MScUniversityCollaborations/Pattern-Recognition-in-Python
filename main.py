@@ -46,7 +46,6 @@ if __name__ == '__main__':
     best_company = var.get(min(var))
     worst_company = var.get(max(var))
 
-    print("Test:", var.fromkeys(best_company))
     print("Η καλύτερη  εταιρεία προβλέψεων είναι η: ", best_company, "με μέσο σφάλμα: ", var_name.get(best_company))
     print("Η χειρότερη εταιρεία προβλέψεων είναι η: ", worst_company, "με μέσο σφάλμα: ", var_name.get(worst_company), "\n")
 
