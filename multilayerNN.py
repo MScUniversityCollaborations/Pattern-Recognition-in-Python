@@ -98,22 +98,22 @@ class Loss_CategoricalCrossentropy(Loss):
 
 
 def input_data(bet, input_layer):
-    # Create dataset
-    train = len(bet) # train 
+    # Δημιουργία δεδομένων (dataset)
+    train = len(bet)  # Δεδομένα εκπαίδευσης
 
     X, y = bet.iloc[:train, 1:], bet.iloc[:train, 0]
 
-    # Create model
-    dense1 = Layer_Dense(input_layer, 10)  # first dense layer, input_layer = 3 inputs
+    # Δημιουργία μοντέλου
+    dense1 = Layer_Dense(input_layer, 10)  # πρώτο dense layer
     activation1 = Activation_ReLU()
-    dense2 = Layer_Dense(10, 3)  # second dense layer, 2 output
+    dense2 = Layer_Dense(10, 3)  # δεύτερο dense layer
     activation2 = Activation_Softmax()
 
-    # Create loss function
+    # Δημιουργία loss συνάρτησης
     loss_function = Loss_CategoricalCrossentropy()
 
-    # Helper variables
-    lowest_loss = 9999999  # some initial value
+    # Βοηθητικές μεταβλητές
+    lowest_loss = 9999999  # δίνουμε μία αρχική τιμή
     best_dense1_weights = dense1.weights.copy()
     best_dense1_biases = dense1.biases.copy()
     best_dense2_weights = dense2.weights.copy()
@@ -121,42 +121,41 @@ def input_data(bet, input_layer):
 
     for iteration in range(1000):
 
-        # Update weights with some small random values
+        # ενημέρωση weights με τυχαίες μικρές τιμές
         dense1.weights += 0.05 * np.random.randn(input_layer, 1)
         dense1.biases += 0.05 * np.random.randn(1, 10)
         dense2.weights += 0.05 * np.random.randn(10, 1)
         dense2.biases += 0.05 * np.random.randn(1, 1)
 
-        # Perform a forward pass of our training data through this layer
+        # Κάνουμε ένα πέρασμα (forward pass) των δεδομένων μας από τα επίπεδα
         dense1.forward(X)
         activation1.forward(dense1.output)
         dense2.forward(activation1.output)
         activation2.forward(dense2.output)
 
-        # Perform a forward pass through activation function
-        # it takes the output of second dense layer here and returns loss
+        # Παίρνουμε την απώλεια που επιστρέφει το δεύτερο στρώμα
         loss = loss_function.calculate(activation2.output, y)
 
-        # Calculate accuracy from output of activation2 and targets
-        # calculate values along first axis
+        # Υπολογίζουμε τις τιμές του πρώτου axis
+        # Υπολογίζουμε το accuracy από τη δεύτερη έξοδο ενεργοποίησης
         predictions = np.argmax(activation2.output, axis=1)
         accuracy = np.mean(predictions == y)
 
-        # If loss is smaller - print and save weights and biases aside
+        # Έλεγχος εάν η απώλεια είναι η μικρότερη
+        # και αποθηκεύουμε τα weights και τα bias
         if loss < lowest_loss:
-            # print('New set of weights found, iteration:', iteration,
-            #       'loss:', loss, 'acc:', accuracy)
             best_dense1_weights = dense1.weights.copy()
             best_dense1_biases = dense1.biases.copy()
             best_dense2_weights = dense2.weights.copy()
             best_dense2_biases = dense2.biases.copy()
             lowest_loss = loss
             final_accuracy = accuracy
-        # Revert weights and biases
+        # Επαναφορά των weights και των biases
         else:
             dense1.weights = best_dense1_weights.copy()
             dense1.biases = best_dense1_biases.copy()
             dense2.weights = best_dense2_weights.copy()
             dense2.biases = best_dense2_biases.copy()
 
+    # Επιστρέφουμε το τελικό accuracy και τό lowest_loss
     return final_accuracy, lowest_loss
