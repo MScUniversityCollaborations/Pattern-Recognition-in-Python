@@ -57,7 +57,7 @@ class LinearRegression:
         return self.weights, self.bias, losses
 
 
-def start(bet):
+def input_data(bet):
 
     # Διαχωρισμός δεδομένων
     X, y, seed = bet.iloc[:, 1:], bet.iloc[:, 0], 40
