@@ -8,6 +8,7 @@ if __name__ == '__main__':
 
     # Προετοιμασία δεδομένων
     b365, bw, iw, lb, data = read_from_csv()
+
     print("Ερώτημα 1: ")
     # mean_loss_b365 = linearNN.input_data(b365)
     # mean_loss_bw = linearNN.input_data(bw)
@@ -55,15 +56,15 @@ if __name__ == '__main__':
     # final_accuracy, lowest_loss = multilayerNN.input_data(data, 28)
     # print("Η συνάρτηση επιστέφει accuracy: ", final_accuracy, "και lowest loss: ", lowest_loss, "\n")
 
-    print("Ερώτημα 4: ")
-    b365.drop('win', 1, inplace=True)
-    cmeans.start(b365, 'B365')
+    print("Ερώτημα 4: Αναμονή για εμφάνιση γραφημάτων...")
+    # b365.drop('win', 1, inplace=True)
+    # cmeans.input_data(b365, 'B365')
+    #
+    # bw.drop('win', 1, inplace=True)
+    # cmeans.input_data(bw, "BW")
+    #
+    # iw.drop('win', 1, inplace=True)
+    # cmeans.input_data(iw, "IW")
 
-    bw.drop('win', 1, inplace=True)
-    cmeans.start(bw, "BW")
-
-    iw.drop('win', 1, inplace=True)
-    cmeans.start(iw, "IW")
-
-    b365.drop('win', 1, inplace=True)
-    lb.start(lb, "lb")
+    #lb.drop('win', 1, inplace=True)
+    #cmeans.input_data(lb, "LB")
