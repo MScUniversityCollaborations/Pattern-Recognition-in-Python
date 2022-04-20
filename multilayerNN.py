@@ -4,23 +4,23 @@ import nnfs
 nnfs.init()
 
 
-# Dense layer
+# Τάξη Dense layer
 class Layer_Dense:
 
-    # Layer initialization
+    # Αρχικοποίηση επιπέδου (layer)
     def __init__(self, n_inputs, n_neurons):
-        # Initialize weights and biases
+        # Αρχικοποίηση weights and biases
         self.output = None
         self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
 
     # Forward pass
     def forward(self, inputs):
-        # Calculate output values from inputs, weights and biases
+        # Υπολογισμός των τιμών της εξόδου από τις εισόδους (weights και biases)
         self.output = np.dot(inputs, self.weights) + self.biases
 
 
-# ReLU activation
+# Τάξη ReLU activation
 class Activation_ReLU:
 
     # Forward pass
@@ -28,7 +28,7 @@ class Activation_ReLU:
         self.output = None
 
     def forward(self, inputs):
-        # Calculate output values from inputs
+        # Υπολογισμός των τιμών της εξόδου από τις εισόδους
         self.output = np.maximum(0, inputs)
 
 
@@ -40,60 +40,59 @@ class Activation_Softmax:
         self.output = None
 
     def forward(self, inputs):
-        # Get unnormalized probabilities
+        # Παίρνουμε τις μη κανονικές πιθανότητες
         exp_values = np.exp(inputs - np.max(inputs, axis=1,
                                             keepdims=True))
-        # Normalize them for each sample
+        # Τις κανονικοποιούμε για κάθε δείγμα
         probabilities = exp_values / np.sum(exp_values, axis=1,
                                             keepdims=True)
         self.output = probabilities
 
 
-# Common loss class
+# Τάξη Loss (Common loss class)
 class Loss:
 
-    # Calculates the data and regularization losses
-    # given model output and ground truth values
+    # Υπολογίζουμε τις απώλειες από τα δεδομένα μας
+    # και τα τακτοποιούμε βάση της εξόδου του μοντέλου μας
     def calculate(self, output, y):
-        # Calculate sample losses
+        # Υπολογισμός των απωλειών δείγματος
         sample_losses = self.forward(output, y)
 
-        # Calculate mean loss
+        # Υπολογισμός μέσης απώλειας
         data_loss = np.mean(sample_losses)
 
-        # Return loss
+        # Επιστρέφουμε το σφάλμα
         return data_loss
 
 
-# Cross-entropy loss
+# Τάξη Loss Categorical Cross Entropy (Cross-entropy loss)
 class Loss_CategoricalCrossentropy(Loss):
 
     # Forward pass
     def forward(self, y_pred, y_true):
 
-        # Number of samples in a batch
+        # Αριθμός δειγμάτων σε μία παρτίδα
         samples = len(y_pred)
 
-        # Clip data to prevent division by 0
-        # Clip both sides to not drag mean towards any value
+        # Αποκοπή δεδομένων για την αποτροπή της διαίρεσης τους με το μηδέν
+        # Επίσης γίνεται αποκοπή κι από τις δύο πλευρές για να μην επηρεαστεί κάποια τιμή
         y_pred_clipped = np.clip(y_pred, 1e-7, 1 - 1e-7)
 
-        # Probabilities for target values -
-        # only if categorical labels
+        # Έλεγχος έαν πετύχαμε τον στόχο μας εφόσον υπάρχουν categorical ετικέτες
         if len(y_true.shape) == 1:
             correct_confidences = y_pred_clipped[
                 range(samples),
                 y_true
             ]
 
-        # Mask values - only for one-hot encoded labels
+        # Τιμές μάσκας - μόνο για κωδικοποιημένες ετικέτες που έχουν ένα μόνο χαρακτηριστικό
         elif len(y_true.shape) == 2:
             correct_confidences = np.sum(
                 y_pred_clipped * y_true,
                 axis=1
             )
 
-        # Losses
+        # Απώλειες (Losses)
         negative_log_likelihoods = -np.log(correct_confidences)
         return negative_log_likelihoods
 
