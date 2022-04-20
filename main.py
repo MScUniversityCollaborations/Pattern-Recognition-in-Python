@@ -32,6 +32,8 @@ if __name__ == '__main__':
     # print("Η καλύτερη  εταιρεία προβλέψεων είναι η: ", best_company, "με μέσο σφάλμα: ", var_name.get(best_company))
     # print("Η χειρότερη εταιρεία προβλέψεων είναι η: ", worst_company, "με μέσο σφάλμα: ", var_name.get(worst_company), "\n")
 
+    # Τέλος ερωτήματος πρώτου
+
     print("Ερώτημα 2: ")
     # final_accuracy_b365, lowest_loss_b365 = multilayerNN.input_data(b365, 3)
     # final_accuracy_bw, lowest_loss_bw = multilayerNN.input_data(bw, 3)
@@ -53,9 +55,13 @@ if __name__ == '__main__':
     # print("Η καλύτερη  εταιρεία προβλέψεων είναι η : ", best_company,  "με accuracy: ", var_name.get(best_company))
     # print("Η χειρότερη εταιρεία προβλέψεων είναι η : ", worst_company, "με accuracy: ", var_name.get(worst_company), "\n")
 
+    # Τέλος ερωτήματος δεύτερου
+
     print("Ερώτημα 3: ")
     # final_accuracy, lowest_loss = multilayerNN.input_data(data, 28)
     # print("Η συνάρτηση επιστέφει accuracy: ", final_accuracy, "και lowest loss: ", lowest_loss, "\n")
+
+    # Τέλος ερωτήματος τρίτου
 
     print("Ερώτημα 4: Αναμονή για εμφάνιση γραφημάτων...")
     # b365.drop('win', 1, inplace=True)
@@ -69,3 +75,5 @@ if __name__ == '__main__':
 
     #lb.drop('win', 1, inplace=True)
     #cmeans.input_data(lb, "LB")
+
+    # Τέλος ερωτήματος τέταρτου
