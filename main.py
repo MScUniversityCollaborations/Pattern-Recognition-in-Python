@@ -4,6 +4,7 @@ import cmeans
 import readData
 from readData import read_from_csv
 
+
 if __name__ == '__main__':
 
     # Προετοιμασία δεδομένων
